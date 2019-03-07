@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Material ui 水波纹效果</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="#">
+  <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+</head>
+<style>
+  button {
+    display: block;
+    margin: 50px auto;
+    position: relative;
+    height: 60px;
+    width: 150px;
+    overflow: hidden;
+    color: #FFF;
+    font-size: 16px;
+    background: #E95546;
+    outline: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .ripple {
+    position: absolute;
+    opacity: 1;
+    width: 0;
+    height: 0;
+    border-radius: 50% 50%;
+    transform: scale(0);
+    -webkit-transform: scale(0);
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  .rippleEffect {
+    -webkit-animation: rippleDrop .6s linear;
+    animation: rippleDrop .6s linear;
+  }
+
+  @keyframes rippleDrop {
+    100% {
+      transform: scale(2);
+      -webkit-transform: scale(2);
+      opacity: 0;
+    }
+  }
+
+  @-webkit-keyframes rippleDrop {
+    100% {
+      transform: scale(2);
+      -webkit-transform: scale(2);
+      opacity: 0;
+    }
+  }
+</style>
+<body>
+<div>
+  <button>这是一个按钮</button>
+</div>
+</body>
+
+<script>
+  $("button").click(function (e) {
+    $(".ripple").remove();
+
+    let button_left = $(this).offset().left;
+    let button_top = $(this).offset().top;
+    let button_width = $(this).width();
+    let button_height = $(this).height();
+
+    let ripple_width = 0;
+    ripple_width = button_width > button_height ? button_width : button_height;
+
+    let ripple_x = e.pageX - button_left - ripple_width / 2;
+    let ripple_y = e.pageY - button_top - ripple_width / 2;
+
+    $(this).prepend("<div class='ripple'></div>");
+
+    $(".ripple")
+    .css({
+      width: ripple_width + 'px',
+      height: ripple_width + 'px',
+      top: ripple_y + 'px',
+      left: ripple_x + 'px'
+    })
+    .addClass("rippleEffect");
+
+  })
+</script>
+</html>
